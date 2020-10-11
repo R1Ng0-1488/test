@@ -10,4 +10,5 @@ class HomePageTest(TestCase):
 	def test_root_url_resolves_to_home_page_view(self):
 		"""test: root url chenge into view of home page"""
 		found = resolve('/')
+		print(found)
 		self.assertEqual(found.func, home_page)
