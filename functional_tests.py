@@ -25,7 +25,7 @@ class NewVisitorTest(unittest.TestCase):
 		# Она видит, что заголовок и шапка страницы говорят о
 		# списках неотложных дел
 
-		self.assertIn('Django', self.browser.title)
+		self.assertIn('To-Do', self.browser.title)
 		self.fail(self.browser.title)
 		# comments...
 
