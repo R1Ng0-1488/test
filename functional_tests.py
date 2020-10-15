@@ -42,12 +42,13 @@ class NewVisitorTest(unittest.TestCase):
 		# Когда она нажимает энтер страница обновляется, и теперь страница
 		# содержит "1: Купить павлиньи перья" в качестве элемента списка
 		inputbox.send_keys(Keys.ENTER)
-		time.sleep()
+		time.sleep(1)
 
 		table = self.browser.find_element_by_id('id_list_table')
 		rows = table.find_elements_by_tag_name('tr')
 		self.assertTrue(
-			any(row.text == '1: Купить павлиные крылья' for row in rows)
+			any(row.text == '1: Купить павлиные крылья' for row in rows),
+			"UNKNOWM element of list didn't appeared in table"
 		)
 		self.fail('Finish the test!')
 
