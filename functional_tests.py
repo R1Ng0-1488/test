@@ -16,6 +16,11 @@ class NewVisitorTest(unittest.TestCase):
 		# close browser
 		self.browser.quit()
 
+	def check_for_row_in_list_table(self, row_text):
+		"""подтверждение строки в таблице списка"""
+		table = self.browser.find_element_by_id('id_list_table')
+		rows = table.find_elements_by_tag_name('tr')
+		self.assertIn(row_text, [row.text for row in rows])
 
 	def test_can_start_a_list_and_retrieve_it_later(self):
 		"""test: can start a list and get it later"""
@@ -43,14 +48,15 @@ class NewVisitorTest(unittest.TestCase):
 		# содержит "1: Купить павлиньи перья" в качестве элемента списка
 		inputbox.send_keys(Keys.ENTER)
 		time.sleep(1)
+		self.check_for_row_in_list_table('1: Купить павлиные крылья')
 
-		table = self.browser.find_element_by_id('id_list_table')
-		rows = table.find_elements_by_tag_name('tr')
-		# self.assertTrue(
-		# 	any(row.text == '1: Купить павлиные крылья' for row in rows),
-		# 	f"New element of list didn't appeare in table. There was\n{table.text}"
-		# )
-		self.assertIn('1: Купить павлиные крылья', [row.text for row in rows])
+		# table = self.browser.find_element_by_id('id_list_table')
+		# rows = table.find_elements_by_tag_name('tr')
+		# # self.assertTrue(
+		# # 	any(row.text == '1: Купить павлиные крылья' for row in rows),
+		# # 	f"New element of list didn't appeare in table. There was\n{table.text}"
+		# # )
+		# self.assertIn('1: Купить павлиные крылья', [row.text for row in rows])
 
 		#ТЕстовое поле по-прежднему приглашает ее добавить еще один элемент. Она
 		# вводит "Сделать мушку из павлиньих перьев" (Эдит очень методична)
@@ -58,15 +64,16 @@ class NewVisitorTest(unittest.TestCase):
 		inputbox.send_keys('Сделать мушку из павлиньих перьев')
 		inputbox.send_keys(Keys.ENTER)
 		time.sleep(1)
-
+		self.check_for_row_in_list_table('1: Купить павлиные крылья')
+		self.check_for_row_in_list_table('2: Сделать мушку из павлиньих перьев')
 		# Страница снова обновляется и теперь показывает оба элемента ее списка
-		table = self.browser.find_element_by_id('id_list_table')
-		rows = table.find_elements_by_tag_name('tr')
-		self.assertIn('1: Купить павлиньи крылья', [row.text for row in rows])
-		self.assertIn(
-			'2: Сделать мушку из павлиньих перьев',
-			[row.text for row in rows]
-		)
+		# table = self.browser.find_element_by_id('id_list_table')
+		# rows = table.find_elements_by_tag_name('tr')
+		# self.assertIn('1: Купить павлиньи крылья', [row.text for row in rows])
+		# self.assertIn(
+		# 	'2: Сделать мушку из павлиньих перьев',
+		# 	[row.text for row in rows]
+		# )
 		self.fail('Finish the test!')
 
 
