@@ -28,7 +28,7 @@ class NewVisitorTest(unittest.TestCase):
 		# списках неотложных дел
 		self.assertIn('To-Do', self.browser.title)
 		# test header
-		header_text = self.browser.find_element_by_tag_name('h1').text 
+		header_text = self.browser.find_element_by_tag_name('h1').text
 		self.assertIn('To-Do', header_text)
 		# test placeholder of inputbox
 		inputbox = self.browser.find_element_by_id('id_new_item')
@@ -36,7 +36,7 @@ class NewVisitorTest(unittest.TestCase):
 			inputbox.get_attribute('placeholder'),
 			'Enter a to-do item'
 			)
-		# test 
+		# test
 		# Она набирате в текстовом поле "Купить павлиные перья"
 		inputbox.send_keys('Купить павлиные крылья')
 		# Когда она нажимает энтер страница обновляется, и теперь страница
@@ -46,9 +46,26 @@ class NewVisitorTest(unittest.TestCase):
 
 		table = self.browser.find_element_by_id('id_list_table')
 		rows = table.find_elements_by_tag_name('tr')
-		self.assertTrue(
-			any(row.text == '1: Купить павлиные крылья' for row in rows),
-			"UNKNOWM element of list didn't appeared in table"
+		# self.assertTrue(
+		# 	any(row.text == '1: Купить павлиные крылья' for row in rows),
+		# 	f"New element of list didn't appeare in table. There was\n{table.text}"
+		# )
+		self.assertIn('1: Купить павлиные крылья', [row.text for row in rows])
+
+		#ТЕстовое поле по-прежднему приглашает ее добавить еще один элемент. Она
+		# вводит "Сделать мушку из павлиньих перьев" (Эдит очень методична)
+		inputbox = self.browser.find_element_by_id('id_new_item')
+		inputbox.send_keys('Сделать мушку из павлиньих перьев')
+		inputbox.send_keys(Keys.ENTER)
+		time.sleep(1)
+
+		# Страница снова обновляется и теперь показывает оба элемента ее списка
+		table = self.browser.find_element_by_id('id_list_table')
+		rows = table.find_elements_by_tag_name('tr')
+		self.assertIn('1: Купить павлиньи крылья', [row.text for row in rows])
+		self.assertIn(
+			'2: Сделать мушку из павлиньих перьев',
+			[row.text for row in rows]
 		)
 		self.fail('Finish the test!')
 
