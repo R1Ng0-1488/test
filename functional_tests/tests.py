@@ -134,4 +134,29 @@ class NewVisitorTest(LiveServerTestCase):
 		self.assertIn('Buy milk', page_text)
 
 		# Both of them are satisfied and they go to sleep
-		self.fail('Finish the test!')
+		# self.fail('Finish the test!')
+
+	def test_layout_and_styling(self):
+		'''test layout and styling'''
+		# Edit opens home page
+		self.browser.get(self.live_server_url)
+		self.browser.set_window_size(1024, 760)
+
+		# She notices that the entry field neatly centered
+		inputbox = self.browser.find_element_by_id('id_new_item')
+		self.assertAlmostEqual(
+			inputbox.location['x'] + inputbox.size['width'] / 2,
+			512,
+			delta=10
+		)
+
+		# Sne starts a new list and see that the entry field neatly centered too
+		inputbox.send_keys('testing')
+		inputbox.send_keys(Keys.ENTER)
+		self.wait_for_row_in_list_table('1: testing')
+		inputbox = self.browser.find_element_by_id('id_new_item')
+		self.assertAlmostEqual(
+			inputbox.location['x'] + inputbox.size['width'] / 2,
+			512,
+			delta=10
+		)

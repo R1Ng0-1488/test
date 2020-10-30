@@ -5,7 +5,9 @@
 <body>
 	<h1>Start a new To-Do list</h1>
 	<form class="" action="/lists/new"  method="post">
-		<input id="id_new_item" type="" name="item_text" placeholder="Enter a to-do item">
+		<p style="text-align: center">
+			<input id="id_new_item" type="" name="item_text" placeholder="Enter a to-do item">
+		</p>
 		{% csrf_token %}
 	</form>
 </body>
