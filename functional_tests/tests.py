@@ -125,13 +125,13 @@ class NewVisitorTest(LiveServerTestCase):
 
 		# Frensis gets a unique url-address
 		frensis_list_url = self.browser.current_url
-		self.assertRegex(frensis_list_url, '/list/.+')
-		self.assertNotIn(frensis_list_url, edith_list_url)
+		self.assertRegex(frensis_list_url, '/lists/.+')
+		self.assertNotEqual(frensis_list_url, edith_list_url)
 
 		# again. There is no an Edith's list
 		page_text = self.browser.find_element_by_tag_name('body').text
 		self.assertNotIn('Купить павлиные перья', page_text)
-		self.assertNotIn('Buy milk', page_text)
+		self.assertIn('Buy milk', page_text)
 
 		# Both of them are satisfied and they go to sleep
 		self.fail('Finish the test!')
